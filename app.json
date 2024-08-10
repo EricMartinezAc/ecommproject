@@ -1,5 +1,10 @@
 {
   "expo": {
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "name": "tienda-virtual",
     "slug": "tienda-virtual",
     "version": "1.0.0",

@@ -1,20 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { Provider } from "react-native-paper";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import ProductsRoute from "./src/components/ProductsRoute";
+import ServicesRoute from "./src/components/ServicesRoute";
+import AuthRoute from "./src/components/AuthRoute";
 
-export default function App() {
+const App = () => {
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "products", title: "Products" },
+    { key: "services", title: "Services" },
+    { key: "auth", title: "Auth" },
+  ]);
+
+  const renderScene = SceneMap({
+    products: ProductsRoute,
+    services: ServicesRoute,
+    auth: AuthRoute,
+  });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider>
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: 400 }}
+        renderTabBar={(props) => (
+          <TabBar
+            {...props}
+            indicatorStyle={{ backgroundColor: "blue" }}
+            style={{ backgroundColor: "white" }}
+          />
+        )}
+      />
+    </Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
